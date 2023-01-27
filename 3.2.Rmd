@@ -1,0 +1,41 @@
+---
+title: '3.2'
+output:
+  pdf_document: default
+  html_document: default
+date: "2023-01-27"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+#Q.3.2.2
+Art Function:
+
+```{r cars}
+library(data.tree)
+library(igraph)
+
+My_flower_art <- function(seed){
+  set.seed(seed)
+  x <- sample(1:5, 1)
+  y <- x*10
+  z <- y*x
+  #First df with x nodes going away from center
+  d1 <- data.frame(from="center", to = paste("node", seq(1,x), sep=""))
+  #second df with each node having y subnodes 
+  d2 <- data.frame(from=rep(d1$to, each=y), to=paste("subnode", seq(1,z), sep="_"))
+  my_hierarchy <- rbind(d1, d2)
+  #using in
+  data <- graph_from_data_frame(my_hierarchy)
+  artwork <- plot(data, vertex.label="", edge.arrow.size=0, vertex.size=5)
+}
+
+My_flower_art(12344)
+My_flower_art(12)
+My_flower_art(567)
+
+
+
+```
